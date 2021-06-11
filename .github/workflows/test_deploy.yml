@@ -40,11 +40,59 @@ jobs:
             
       - name: install react-native CLI
         run: |
-          npm install -g react-native-cli
+          sudo npm install -g react-native-cli
             
       - name: install npm dependencies
         run: |
           npm install
           
+      # TODO: update version
+          
+      - name: build Android app
+        run: |
+          cd android
+          ./gradlew bundleRelease
       
-        
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          # Artifact name
+          name: BDReactNativeMinimalIntegration.aab
+          path: android/app/build/outputs/bundle/release/app.aab
+
+  build-ios-app:
+    runs-on: macOS-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      # make sure that node installed
+      - name: intall node
+        uses: actions/setup-node@v2.1.5
+      
+      # restore react-native dependencies
+      - name: npm cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+      - name: install react-native CLI
+        run: |
+          sudo npm install -g react-native-cli
+            
+      - name: install npm dependencies
+        run: |
+          npm install
+          
+      # TODO: 
+      # 1. install pods
+      # 2. cache pods
+      # 3. update version
+      # 4. build app
+      # 6. upload artifacts
+      # 7. deploy artifacts to appcenter
+      
+      
