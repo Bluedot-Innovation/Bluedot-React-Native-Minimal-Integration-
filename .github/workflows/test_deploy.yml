@@ -86,13 +86,32 @@ jobs:
       - name: install npm dependencies
         run: |
           npm install
+
+      - name: cocoapods cache
+        uses: actions/cache@v2
+        with:
+          path: Pods  
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: install cocoapods
+        run: pod install
+
+      - name: build iOS
+        run: fastlane build
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          # Artifact name
+          name: BDReactNativeMinimalIntegration.ipa
+          path: ios/RNPointSDKMinimalIntegration.ipa
+        
+      
           
       # TODO: 
-      # 1. install pods
-      # 2. cache pods
       # 3. update version
-      # 4. build app
-      # 6. upload artifacts
       # 7. deploy artifacts to appcenter
       
       
