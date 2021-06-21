@@ -96,7 +96,9 @@ jobs:
             ${{ runner.os }}-pods-
 
       - name: install cocoapods
-        run: pod install
+        run: |
+          cd ios
+          pod install
 
       - name: build iOS
         run: fastlane build
