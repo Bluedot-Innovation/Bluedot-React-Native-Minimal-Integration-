@@ -49,14 +49,14 @@ jobs:
       - name: build Android app
         run: |
           cd android
-          ./gradlew bundleRelease
+          ./gradlew assembleRelease
       
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.3
         with:
           # Artifact name
-          name: BDReactNativeMinimalIntegration.aab
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          name: BDReactNativeMinimalIntegration.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
 
   build-ios-app:
     runs-on: macos-latest
@@ -137,7 +137,7 @@ jobs:
           appName: bluedot/BDReactNativeIntegration-1
           token: ${{secrets.APPCENTER_TOKEN}}
           group: Collaborators
-          file: BDReactNativeMinimalIntegration.aab
+          file: BDReactNativeMinimalIntegration.apk
           notifyTesters: true
           gitReleaseNotes: true
 
