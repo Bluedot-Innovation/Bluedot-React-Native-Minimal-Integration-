@@ -18,7 +18,24 @@ default_platform(:ios)
 platform :ios do
   desc "Description of what the lane does"
   lane :build do
-    match
+    if is_ci
+      create_keychain(
+        name: "CI",
+        password: ENV["MATCH_PASSWORD"],
+        default_keychain: true,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: false
+      )
+
+      match(      
+        keychain_name: "CI",
+        keychain_password: ENV["MATCH_PASSWORD"]
+      )
+
+    else
+      match
+    end
 
     gym
   end
