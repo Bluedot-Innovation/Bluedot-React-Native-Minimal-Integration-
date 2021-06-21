@@ -100,6 +100,14 @@ jobs:
           cd ios
           pod install
 
+      # add SSH private key to checkout github git urls
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEVOPS_SSH_PRIVATE_KEY }}
+          known_hosts: github.com
+          if_key_exists: ignore
+
       - name: build iOS
         run: |
           cd ios
