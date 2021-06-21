@@ -101,7 +101,9 @@ jobs:
           pod install
 
       - name: build iOS
-        run: fastlane build
+        run: |
+          cd ios
+          fastlane build
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.3
