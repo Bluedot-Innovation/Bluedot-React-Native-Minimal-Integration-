@@ -58,66 +58,66 @@ jobs:
           name: BDReactNativeMinimalIntegration.apk
           path: android/app/build/outputs/apk/release/app-release.apk
 
-  build-ios-app:
-    runs-on: macos-latest
+  # build-ios-app:
+  #   runs-on: macos-latest
     
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
       
-      # make sure that node installed
-      - name: intall node
-        uses: actions/setup-node@v2.1.5
+  #     # make sure that node installed
+  #     - name: intall node
+  #       uses: actions/setup-node@v2.1.5
       
-      # restore react-native dependencies
-      - name: npm cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+  #     # restore react-native dependencies
+  #     - name: npm cache
+  #       uses: actions/cache@v2.1.6
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
             
-      - name: install react-native CLI
-        run: |
-          sudo npm install -g react-native-cli
+  #     - name: install react-native CLI
+  #       run: |
+  #         sudo npm install -g react-native-cli
             
-      - name: install npm dependencies
-        run: |
-          npm install
+  #     - name: install npm dependencies
+  #       run: |
+  #         npm install
 
-      - name: cocoapods cache
-        uses: actions/cache@v2
-        with:
-          path: Pods  
-          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
+  #     - name: cocoapods cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: Pods  
+  #         key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pods-
 
-      - name: install cocoapods
-        run: |
-          npx pod-install
+  #     - name: install cocoapods
+  #       run: |
+  #         npx pod-install
 
-      # add SSH private key to checkout github git urls
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.DEVOPS_SSH_PRIVATE_KEY }}
-          known_hosts: github.com
-          if_key_exists: ignore
+  #     # add SSH private key to checkout github git urls
+  #     - name: Install SSH key
+  #       uses: shimataro/ssh-key-action@v2
+  #       with:
+  #         key: ${{ secrets.DEVOPS_SSH_PRIVATE_KEY }}
+  #         known_hosts: github.com
+  #         if_key_exists: ignore
 
-      - name: build iOS
-        env:
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: |
-          cd ios
-          fastlane build
+  #     - name: build iOS
+  #       env:
+  #         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  #       run: |
+  #         cd ios
+  #         fastlane build
         
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v2.2.3
-        with:
-          # Artifact name
-          name: BDReactNativeMinimalIntegration.ipa
-          path: ios/RNPointSDKMinimalIntegration.ipa
+  #     - name: Upload a Build Artifact
+  #       uses: actions/upload-artifact@v2.2.3
+  #       with:
+  #         # Artifact name
+  #         name: BDReactNativeMinimalIntegration.ipa
+  #         path: ios/RNPointSDKMinimalIntegration.ipa
         
   deploy-to-appcenter:
     runs-on: ubuntu-latest
@@ -140,16 +140,17 @@ jobs:
           file: BDReactNativeMinimalIntegration.apk
           notifyTesters: true
           gitReleaseNotes: true
+          debug: true
 
-      - name: upload iOS app to App Center
-        uses: wzieba/AppCenter-Github-Action@v1
-        with:
-          appName: bluedot/BDReactNativeIntegration
-          token: ${{secrets.APPCENTER_TOKEN}}
-          group: Collaborators
-          file: BDReactNativeMinimalIntegration.ipa
-          notifyTesters: true
-          gitReleaseNotes: true
+      # - name: upload iOS app to App Center
+      #   uses: wzieba/AppCenter-Github-Action@v1
+      #   with:
+      #     appName: bluedot/BDReactNativeIntegration
+      #     token: ${{secrets.APPCENTER_TOKEN}}
+      #     group: Collaborators
+      #     file: BDReactNativeMinimalIntegration.ipa
+      #     notifyTesters: true
+      #     gitReleaseNotes: true
           
       # TODO: 
       # 1. update version
