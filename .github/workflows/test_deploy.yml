@@ -2,6 +2,9 @@
 
 name: deploy apps for QA
 
+env:
+  MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
