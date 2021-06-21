@@ -134,7 +134,7 @@ jobs:
       - name: upload andriod app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
-          appName: BDReactNativeIntegration-1
+          appName: bluedot/BDReactNativeIntegration-1
           token: ${{secrets.APPCENTER_TOKEN}}
           group: Collaborators
           file: BDReactNativeMinimalIntegration.aab
@@ -144,7 +144,7 @@ jobs:
       - name: upload iOS app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
-          appName: BDReactNativeIntegration-1
+          appName: bluedot/BDReactNativeIntegration
           token: ${{secrets.APPCENTER_TOKEN}}
           group: Collaborators
           file: BDReactNativeMinimalIntegration.ipa
