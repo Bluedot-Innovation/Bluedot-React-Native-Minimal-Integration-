@@ -130,6 +130,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Download artifact
+        id: download
         uses: actions/download-artifact@v2
 
       - name: upload andriod app to App Center
@@ -138,7 +139,7 @@ jobs:
           appName: bluedot/BDReactNativeIntegration-1
           token: ${{secrets.APPCENTER_TOKEN}}
           group: Collaborators
-          file: BDReactNativeMinimalIntegration.apk
+          file: ${{steps.download.outputs.download-path}}/BDReactNativeMinimalIntegration.apk
           notifyTesters: true
           gitReleaseNotes: true
           debug: true
