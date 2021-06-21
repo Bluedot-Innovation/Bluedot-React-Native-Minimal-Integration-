@@ -49,8 +49,6 @@ jobs:
         run: |
           npm install
           
-      # TODO: update version
-          
       - name: build Android app
         run: |
           cd android
@@ -123,10 +121,37 @@ jobs:
           name: BDReactNativeMinimalIntegration.ipa
           path: ios/RNPointSDKMinimalIntegration.ipa
         
-      
+  deploy-to-appcenter:
+    runs-on: ubuntu-latest
+
+    needs: [build-android-app, build-ios-app]
+
+    steps:
+      # Checks-out your repository to get release notes
+      - uses: actions/checkout@v2
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+
+      - name: upload andriod app to App Center
+        uses: wzieba/AppCenter-Github-Action@v1
+        with:
+          appName: BDReactNativeIntegration-1
+          token: ${{secrets.APPCENTER_TOKEN}}
+          group: Collaborators
+          file: BDReactNativeMinimalIntegration.aab
+          notifyTesters: true
+          gitReleaseNotes: true
+
+      - name: upload iOS app to App Center
+        uses: wzieba/AppCenter-Github-Action@v1
+        with:
+          appName: BDReactNativeIntegration-1
+          token: ${{secrets.APPCENTER_TOKEN}}
+          group: Collaborators
+          file: BDReactNativeMinimalIntegration.ipa
+          notifyTesters: true
+          gitReleaseNotes: true
           
       # TODO: 
-      # 3. update version
-      # 7. deploy artifacts to appcenter
-      
-      
+      # 1. update version
