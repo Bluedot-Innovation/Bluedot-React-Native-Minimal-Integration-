@@ -122,7 +122,8 @@ jobs:
   deploy-to-appcenter:
     runs-on: ubuntu-latest
 
-    needs: [build-android-app, build-ios-app]
+    # needs: [build-android-app, build-ios-app]
+    needs: build-android-app
 
     steps:
       # Checks-out your repository to get release notes
