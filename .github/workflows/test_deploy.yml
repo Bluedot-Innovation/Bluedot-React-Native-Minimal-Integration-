@@ -133,6 +133,9 @@ jobs:
         id: download
         uses: actions/download-artifact@v2
 
+      - name: print
+        run: ls -a
+
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
@@ -142,6 +145,7 @@ jobs:
           file: ${{steps.download.outputs.download-path}}/BDReactNativeMinimalIntegration.apk
           notifyTesters: true
           releaseNotes: ReleaseNotes.md
+          debug: true
 
       # - name: upload iOS app to App Center
       #   uses: wzieba/AppCenter-Github-Action@v1
