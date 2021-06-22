@@ -133,12 +133,16 @@ jobs:
         id: download
         uses: actions/download-artifact@v2
 
-      - name: Upload android app with App Center CLI
-        uses: avocaddo/AppCenter-Github-Action@v1.0.2
+      - name: upload Android app to App Center
+        uses: wzieba/AppCenter-Github-Action@v1
         with:
-          command: appcenter distribute release -f BDReactNativeMinimalIntegration.apk -g Collaborators -a bluedot/BDReactNativeIntegration-1
+          appName: bluedot/BDReactNativeIntegration-1
           token: ${{secrets.APPCENTER_TOKEN}}
-          
+          group: Collaborators
+          file: app-release.apk
+          notifyTesters: true
+          gitReleaseNotes: true
+
       # - name: upload iOS app to App Center
       #   uses: wzieba/AppCenter-Github-Action@v1
       #   with:
