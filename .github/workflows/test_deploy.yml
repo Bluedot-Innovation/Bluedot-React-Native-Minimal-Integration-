@@ -133,22 +133,12 @@ jobs:
         id: download
         uses: actions/download-artifact@v2
 
-      - name: upload andriod app to App Center
-        uses: devussy/AppCenter-Distribute-Github-Action@v1.0.2
+      - name: Upload android app with App Center CLI
+        uses: avocaddo/AppCenter-Github-Action@v1.0.2
         with:
-          app: bluedot/BDReactNativeIntegration-1
+          command: appcenter distribute release -f BDReactNativeMinimalIntegration.apk -g Collaborators -a bluedot/BDReactNativeIntegration-1
           token: ${{secrets.APPCENTER_TOKEN}}
-          group: Collaborators
-          file: ${{steps.download.outputs.download-path}}/BDReactNativeMinimalIntegration.apk
-          silent: false
-          # app: bluedot/BDReactNativeIntegration-1
-          # token: ${{secrets.APPCENTER_TOKEN}}
-          # group: Collaborators
-          # file: ${{steps.download.outputs.download-path}}/BDReactNativeMinimalIntegration.apk
-          # notifyTesters: true
-          # gitReleaseNotes: true
-          # debug: true
-
+          
       # - name: upload iOS app to App Center
       #   uses: wzieba/AppCenter-Github-Action@v1
       #   with:
