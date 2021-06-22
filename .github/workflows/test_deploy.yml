@@ -131,15 +131,15 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
 
-      - name: upload andriod app to App Center
+      - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
           appName: bluedot/BDReactNativeIntegration-1
           token: ${{secrets.APPCENTER_TOKEN}}
           group: Collaborators
-          file: BDReactNativeMinimalIntegration.apk
+          file: app-release.apk
           notifyTesters: true
-          gitReleaseNotes: true
+          releaseNotes: ReleaseNotes.md
 
       - name: upload iOS app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
@@ -147,9 +147,9 @@ jobs:
           appName: bluedot/BDReactNativeIntegration
           token: ${{secrets.APPCENTER_TOKEN}}
           group: Collaborators
-          file: BDReactNativeMinimalIntegration.ipa
+          file: RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
-          gitReleaseNotes: true
+          releaseNotes: ReleaseNotes.md
           
       # TODO: 
       # 1. update version
