@@ -30,7 +30,7 @@ jobs:
       - name: Check Tag
         id: check-tag
         run: |
-          if [[ ${{ github.event.ref }} =~ ^refs/tags/v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-pre\+build\.(0|[1-9]\d*)$ ]]; then
+          if [[ ${{ github.ref }} =~ ^refs/tags/v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-pre\+build\.(0|[1-9]\d*)$ ]]; then
               echo ::set-output name=is_downstream::true
           fi
 
