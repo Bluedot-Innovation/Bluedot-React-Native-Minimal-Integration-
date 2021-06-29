@@ -98,7 +98,7 @@ jobs:
        
       - name: install npm dependencies
         run: |
-          npm ci
+          npm install
 
       - name: install react-native CLI
         run: |
@@ -164,7 +164,7 @@ jobs:
             
       - name: install npm dependencies
         run: |
-          npm ci
+          npm install
 
       - name: install react-native CLI
         run: |
