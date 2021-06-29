@@ -124,7 +124,8 @@ jobs:
           print-file: true
 
       # chache gradle files
-      - uses: actions/cache@v2
+      - name: cache gradle files
+        uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
