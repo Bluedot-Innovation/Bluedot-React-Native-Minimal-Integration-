@@ -2,16 +2,13 @@
 
 name: deploy apps for QA
 
-env:
-  TAG_REGEX: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-pre\+build\.(0|[1-9]\d*)$'
-
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
     tags:
-      - ${ TAG_REGEX }
+      - ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-pre\+build\.(0|[1-9]\d*)$
   pull_request:
     branches: [ master ]
 
@@ -33,7 +30,7 @@ jobs:
       - name: Check Tag
         id: check-tag
         run: |
-          if [[ ${{ github.event.ref }} =~ ^refs/tags/${ TAG_REGEX } ]]; then
+          if [[ ${{ github.event.ref }} =~ ^refs/tags/v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-pre\+build\.(0|[1-9]\d*)$ ]]; then
               echo ::set-output name=is_downstream::true
           fi
 
