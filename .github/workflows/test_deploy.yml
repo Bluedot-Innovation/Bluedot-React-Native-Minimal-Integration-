@@ -2,11 +2,16 @@
 
 name: deploy apps for QA
 
+env:
+  TAG_REGEX: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-pre\+build\.(0|[1-9]\d*)$'
+
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
+    tags:
+      - ${ TAG_REGEX }
   pull_request:
     branches: [ master ]
 
@@ -15,10 +20,66 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  prepare-pre-release:
+    runs-on: ubuntu-latest
+
+    outputs:
+      is_downstream: ${{ steps.check-tag.outputs.is_downstream }}
+      semver: ${{ steps.semver.outputs.semver }}
+      file_name: ${{ steps.artifact.outputs.file_name }}
+
+    steps:
+      # check whenever this is a downstream build
+      - name: Check Tag
+        id: check-tag
+        run: |
+          if [[ ${{ github.event.ref }} =~ ^refs/tags/${ TAG_REGEX } ]]; then
+              echo ::set-output name=is_downstream::true
+          fi
+
+      # get an upstream build SDK version
+      - name: get semver from the tag
+        if: steps.check-tag.outputs.is_downstream == 'true'
+        id: semver
+        uses: LykkeBusiness/get-semver-from-tag-action@v1.0.2
+        with:
+            tag: ${{ github.ref }}
+
+      - name: set semver for downstream builds
+        if: steps.check-tag.outputs.is_downstream == 'true'
+        run: |
+          echo ::set-output name=semver::${{ steps.semver.outputs.non-prefixed }}
+
+      - name: download pre-release wrapper
+        if: steps.check-tag.outputs.is_downstream == 'true'
+        uses: Legion2/download-release-action@v2.1.0
+        with:
+          repository: "Bluedot-Innovation/Bluedot-React-Native-Plugin"
+          tag: ${{ steps.semver.outputs.non-prefixed }}
+          path: downloads
+          file: "*.tgz"
+
+      - name: get pre-release artifact name
+        if: steps.check-tag.outputs.is_downstream == 'true'
+        id: artifact
+        run: |
+          cd downloads
+          echo ::set-output name=file_name::$(ls | grep .tgz)
+
+      - name: upload temp build artifact
+        if: steps.check-tag.outputs.is_downstream == 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: pre_release_wrapper
+          path: downloads/${{ steps.artifact.outputs.file_name }}
+          retention-days: 1
+
   # This workflow contains a single job called "build"
   build-android-app:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    needs:
+      - prepare-pre-release
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -37,14 +98,39 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-            
+       
+      - name: install npm dependencies
+        run: |
+          npm ci
+
       - name: install react-native CLI
         run: |
           sudo npm install -g react-native-cli
-            
-      - name: install npm dependencies
+
+      # download pre-release version of RN wrapper when this is a downstream build
+      - name: download pre-release wrapper
+        if: ${{ needs.prepare-pre-release.outputs.is_downstream }} == 'true'
+        uses: actions/download-artifact@v2
+        with:
+          name: pre_release_wrapper
+
+      - run: ls
+
+      # install pre-release version of RN wrapper when this is a downstream build
+      - name: isntall pre-release wrapper
+        if: ${{ needs.prepare-pre-release.outputs.is_downstream }} == 'true'
         run: |
-          npm install
+          npm install "pre_release_wrapper/${{ needs.prepare-pre-release.outputs.file_name }}"
+
+      # update an app version to match SDK version when this is a downstream build
+      - name: update version number
+        if: ${{ needs.prepare-pre-release.outputs.is_downstream }} == 'true'
+        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+        with:
+          build-gradle-path: './path_to_your/build.gradle'
+          version-code: ${{ github.run_number }}
+          version-name: ${{ needs.prepare-pre-release.outputs.semver }}
+          print-file: true
           
       - name: build Android app
         run: |
@@ -60,7 +146,9 @@ jobs:
 
   build-ios-app:
     runs-on: macos-latest
-    
+    needs:
+      - prepare-pre-release
+
     steps:
       - uses: actions/checkout@v2
       
@@ -77,13 +165,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
             
+      - name: install npm dependencies
+        run: |
+          npm ci
+
       - name: install react-native CLI
         run: |
           sudo npm install -g react-native-cli
-            
-      - name: install npm dependencies
-        run: |
-          npm install
 
       - name: cocoapods cache
         uses: actions/cache@v2
@@ -104,6 +192,28 @@ jobs:
           key: ${{ secrets.DEVOPS_SSH_PRIVATE_KEY }}
           known_hosts: github.com
           if_key_exists: ignore
+      
+      # download pre-release version of RN wrapper when this is a downstream build
+      - name: download pre-release wrapper
+        if: ${{ needs.prepare-pre-release.outputs.is_downstream }} == 'true'
+        uses: actions/download-artifact@v2
+        with:
+          name: pre_release_wrapper
+
+      # install pre-release version of RN wrapper when this is a downstream build
+      - name: isntall pre-release wrapper
+        if: ${{ needs.prepare-pre-release.outputs.is_downstream }} == 'true'
+        run: |
+          npm install "pre_release_wrapper/${{ needs.prepare-pre-release.outputs.file_name }}"
+      
+      # update an app version to match SDK version when this is a downstream build
+      - name: update version number 
+        if: ${{ needs.prepare-pre-release.outputs.is_downstream }} == 'true'
+        uses: yanamura/ios-bump-version@v1
+        with:
+          version: ${{ needs.prepare-pre-release.outputs.semver }}
+          build-number: ${{ github.run_number }}
+          project-path: ios #Example for React Native project
 
       - name: build iOS
         env:
@@ -131,12 +241,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
 
-
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
           appName: bluedot/BDReactNativeIntegration-1
-          token: ${{secrets.APPCENTER_TOKEN}}
+          token: ${{ secrets.APPCENTER_TOKEN }}
           group: Collaborators
           file: Android/app-release.apk
           notifyTesters: true
@@ -147,11 +256,8 @@ jobs:
         uses: wzieba/AppCenter-Github-Action@v1
         with:
           appName: bluedot/BDReactNativeIntegration
-          token: ${{secrets.APPCENTER_TOKEN}}
+          token: ${{ secrets.APPCENTER_TOKEN }}
           group: Collaborators
           file: iOS/RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
           releaseNotes: ReleaseNotes.md
-          
-      # TODO: 
-      # 1. update version
