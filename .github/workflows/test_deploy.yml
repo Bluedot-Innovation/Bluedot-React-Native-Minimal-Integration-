@@ -14,6 +14,10 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Build an app with a specific wrapper version'
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -21,17 +25,19 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      is_downstream: ${{ steps.check-tag.outputs.is_downstream }}
+      is_tag_build: ${{ steps.check-tag.outputs.is_tag_build }}
       semver: ${{ steps.semver.outputs.semver }}
       file_name: ${{ steps.artifact.outputs.file_name }}
 
     steps:
-      # check whenever this is a downstream build
+      # check whenever this is a build for tag whenever it's a downstream build or a manual build
       - name: Check Tag
         id: check-tag
-        if: contains(github.ref, '-pre+build.')
+        if: |
+          contains(github.ref, '-pre+build.') ||
+          contains(github.event.input.tag, '-pre+build.')
         run: |
-          echo "::set-output name=is_downstream::true"
+          echo "::set-output name=is_tag_build::true"
 
       - name: set semver for downstream builds
         if: contains(github.ref, '-pre+build.')
@@ -102,20 +108,20 @@ jobs:
 
       # download pre-release version of RN wrapper when this is a downstream build
       - name: download pre-release wrapper
-        if: ${{ needs.prepare-pre-release.outputs.is_downstream == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         uses: actions/download-artifact@v2
         with:
           name: pre_release_wrapper
 
       # install pre-release version of RN wrapper when this is a downstream build
       - name: isntall pre-release wrapper
-        if: ${{ needs.prepare-pre-release.outputs.is_downstream == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         run: |
           npm install ${{ needs.prepare-pre-release.outputs.file_name }}
 
       # update an app version to match SDK version when this is a downstream build
       - name: update version number
-        if: ${{ needs.prepare-pre-release.outputs.is_downstream == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         uses: damienaicheh/update-android-version-gradle-action@v1.0.0
         with:
           build-gradle-path: './android/build.gradle'
@@ -177,20 +183,20 @@ jobs:
 
       # download pre-release version of RN wrapper when this is a downstream build
       - name: download pre-release wrapper
-        if: ${{ needs.prepare-pre-release.outputs.is_downstream == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         uses: actions/download-artifact@v2
         with:
           name: pre_release_wrapper
 
       # install pre-release version of RN wrapper when this is a downstream build
       - name: install pre-release wrapper
-        if: ${{ needs.prepare-pre-release.outputs.is_downstream == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         run: |
           npm install ${{ needs.prepare-pre-release.outputs.file_name }}
       
       # update an app version to match SDK version when this is a downstream build
       - name: update version number 
-        if: ${{ needs.prepare-pre-release.outputs.is_downstream == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         uses: yanamura/ios-bump-version@v1
         with:
           version: ${{ needs.prepare-pre-release.outputs.semver }}
