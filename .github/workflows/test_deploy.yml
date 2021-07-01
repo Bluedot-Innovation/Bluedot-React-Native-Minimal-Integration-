@@ -34,7 +34,7 @@ jobs:
         id: check-tag
         if: |
           contains(github.ref, '-pre+build.') ||
-          contains(github.event.input.tag, '-pre+build.')
+          contains(github.event.inputs.tag, '-pre+build.')
         run: |
           echo "::set-output name=is_tag_build::true"
 
