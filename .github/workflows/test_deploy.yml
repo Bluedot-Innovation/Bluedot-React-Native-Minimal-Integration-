@@ -38,12 +38,18 @@ jobs:
         run: |
           echo "::set-output name=is_tag_build::true"
 
+      
+
       - name: set semver for downstream builds
         if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
         id: semver
         run: |
           regex=".*(v(([0-9]+\.[0-9]+\.[0-9]+)-pre\+build.[0-9]+))"
           if [[ ${{ github.ref }} =~ $regex ]]; then
+            echo "::set-output name=tag::${BASH_REMATCH[1]}"
+            echo "::set-output name=semver::${BASH_REMATCH[2]}"
+            echo "::set-output name=version::${BASH_REMATCH[3]}"
+          elif [[ ${{ github.event.inputs.tag }} =~ $regex ]]; then
             echo "::set-output name=tag::${BASH_REMATCH[1]}"
             echo "::set-output name=semver::${BASH_REMATCH[2]}"
             echo "::set-output name=version::${BASH_REMATCH[3]}"
