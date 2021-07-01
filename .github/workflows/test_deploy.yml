@@ -39,7 +39,7 @@ jobs:
           echo "::set-output name=is_tag_build::true"
 
       - name: set semver for downstream builds
-        if: contains(github.ref, '-pre+build.')
+        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
         id: semver
         run: |
           regex=".*(v(([0-9]+\.[0-9]+\.[0-9]+)-pre\+build.[0-9]+))"
@@ -50,7 +50,7 @@ jobs:
           fi
       
       - name: download pre-release wrapper
-        if: contains(github.ref, '-pre+build.')
+        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
         uses: i3h/download-release-asset@v1
         with:
           owner: Bluedot-Innovation
@@ -59,13 +59,13 @@ jobs:
           file: "bluedot-react-native-${{ steps.semver.outputs.version }}.tgz"
 
       - name: get pre-release artifact name
-        if: contains(github.ref, '-pre+build.')
+        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
         id: artifact
         run: |
           echo "::set-output name=file_name::$(ls | grep .tgz)"
 
       - name: upload temp build artifact
-        if: contains(github.ref, '-pre+build.')
+        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
         uses: actions/upload-artifact@v2
         with:
           name: pre_release_wrapper
