@@ -1,4 +1,16 @@
 PODS:
+  - appcenter-core (4.2.0):
+    - AppCenterReactNativeShared (~> 4.0)
+    - React-Core
+  - appcenter-crashes (4.2.0):
+    - AppCenter/Crashes (~> 4.0)
+    - AppCenterReactNativeShared (~> 4.0)
+    - React-Core
+  - AppCenter/Core (4.2.0)
+  - AppCenter/Crashes (4.2.0):
+    - AppCenter/Core
+  - AppCenterReactNativeShared (4.2.0):
+    - AppCenter/Core (= 4.2.0)
   - BluedotPointSDK (15.5.1)
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.5)
@@ -283,7 +295,7 @@ PODS:
   - React-jsinspector (0.64.2)
   - react-native-geolocation (2.0.2):
     - React
-  - react-native-plugin (2.0.5):
+  - react-native-plugin (2.0.4):
     - BluedotPointSDK
     - React
   - React-perflogger (0.64.2)
@@ -415,6 +427,8 @@ PODS:
     - Yoga (~> 1.14)
 
 DEPENDENCIES:
+  - appcenter-core (from `../node_modules/appcenter/ios`)
+  - appcenter-crashes (from `../node_modules/appcenter-crashes/ios`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
@@ -497,6 +511,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppCenter
+    - AppCenterReactNativeShared
     - BluedotPointSDK
     - boost-for-react-native
     - CocoaAsyncSocket
@@ -512,6 +528,10 @@ SPEC REPOS:
     - YogaKit
 
 EXTERNAL SOURCES:
+  appcenter-core:
+    :path: "../node_modules/appcenter/ios"
+  appcenter-crashes:
+    :path: "../node_modules/appcenter-crashes/ios"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
@@ -630,6 +650,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AppCenter: 87ef6eefd8ade4df59e88951288587429f3dd2a5
+  appcenter-core: 1d3ae87d4f9280db4522fe8c25d3f7c9ab8e415f
+  appcenter-crashes: dcfc443bd9fe7094e4fe49b15fabe68389a80c70
+  AppCenterReactNativeShared: ef370308277adf71ec1586798b196e4cc35335ea
   BluedotPointSDK: bdf104d496328c9bedf138395073a9486b0bcf2e
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
@@ -668,7 +692,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
-  react-native-plugin: 781a84c59603ac67d8b1d9901a17a43333bf9a47
+  react-native-plugin: 3a29a79bcdee51765784d39671a90ec179c8601e
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa

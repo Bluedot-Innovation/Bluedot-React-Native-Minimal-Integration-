@@ -11,6 +11,7 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		8F1C51E52698061300ACAEF6 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F1C51E42698061300ACAEF6 /* AppCenter-Config.plist */; };
 		8FCA61F3267B16E30061FA9E /* EmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA61F2267B16E30061FA9E /* EmptyFile.swift */; };
 		F8DACD97607B0C1D19C14618 /* libPods-RNPointSDKMinimalIntegration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BAA7A43B6D3971E0333A10F /* libPods-RNPointSDKMinimalIntegration.a */; };
 /* End PBXBuildFile section */
@@ -27,6 +28,7 @@
 		24FAAE7EDA13C576F22EC3A3 /* Pods-RNPointSDKMinimalIntegration.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNPointSDKMinimalIntegration.release.xcconfig"; path = "Target Support Files/Pods-RNPointSDKMinimalIntegration/Pods-RNPointSDKMinimalIntegration.release.xcconfig"; sourceTree = "<group>"; };
 		3BAA7A43B6D3971E0333A10F /* libPods-RNPointSDKMinimalIntegration.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNPointSDKMinimalIntegration.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		714A50CFB3129E7A6B1F929C /* Pods-RNPointSDKMinimalIntegration.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNPointSDKMinimalIntegration.debug.xcconfig"; path = "Target Support Files/Pods-RNPointSDKMinimalIntegration/Pods-RNPointSDKMinimalIntegration.debug.xcconfig"; sourceTree = "<group>"; };
+		8F1C51E42698061300ACAEF6 /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		8FCA61F1267B16E30061FA9E /* RNPointSDKMinimalIntegration-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNPointSDKMinimalIntegration-Bridging-Header.h"; sourceTree = "<group>"; };
 		8FCA61F2267B16E30061FA9E /* EmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFile.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -56,6 +58,7 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				8FCA61F2267B16E30061FA9E /* EmptyFile.swift */,
 				8FCA61F1267B16E30061FA9E /* RNPointSDKMinimalIntegration-Bridging-Header.h */,
+				8F1C51E42698061300ACAEF6 /* AppCenter-Config.plist */,
 			);
 			name = RNPointSDKMinimalIntegration;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				8F1C51E52698061300ACAEF6 /* AppCenter-Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
