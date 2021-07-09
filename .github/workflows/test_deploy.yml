@@ -228,6 +228,11 @@ jobs:
           known_hosts: github.com
           if_key_exists: ignore
 
+      - name: update AppCenter secret
+        run: |
+          sed -i '' "s/{APP_SECRET_VALUE}/${{ secrets.APPCENTER_SECRET_IOS }}/"" ios/AppCenter-Config.plist
+          cat ios/AppCenter-Config.plist
+
       - name: build iOS
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
