@@ -146,9 +146,11 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: update AppCenter secret
-        run: |
-          sed -i '' "s/{APP_SECRET_VALUE}/${{ secrets.APPCENTER_SECRET_ANDROID }}/" android/app/src/main/assets/appcenter-config.json
-          cat android/app/src/main/assets/appcenter-config.json
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "{APP_SECRET_VALUE}"
+          replace: ${{ secrets.APPCENTER_SECRET_ANDROID }}
+          include: appcenter-config.json
                 
       - name: build Android app
         run: |
@@ -234,9 +236,11 @@ jobs:
           if_key_exists: ignore
 
       - name: update AppCenter secret
-        run: |
-          sed -i '' "s/{APP_SECRET_VALUE}/${{ secrets.APPCENTER_SECRET_IOS }}/" ios/AppCenter-Config.plist
-          cat ios/AppCenter-Config.plist
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "{APP_SECRET_VALUE}"
+          replace: ${{ secrets.APPCENTER_SECRET_IOS }}
+          include: AppCenter-Config.plist
 
       - name: build iOS
         env:
