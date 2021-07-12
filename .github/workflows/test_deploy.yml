@@ -236,11 +236,9 @@ jobs:
           if_key_exists: ignore
 
       - name: update AppCenter secret
-        uses: jacobtomlinson/gha-find-replace@master
-        with:
-          find: "{APP_SECRET_VALUE}"
-          replace: ${{ secrets.APPCENTER_SECRET_IOS }}
-          include: AppCenter-Config.plist
+        run: |
+          sed -i '' "s/{APP_SECRET_VALUE}/${{ secrets.APPCENTER_SECRET_IOS }}/" ios/AppCenter-Config.plist
+          cat ios/AppCenter-Config.plist
 
       - name: build iOS
         env:
