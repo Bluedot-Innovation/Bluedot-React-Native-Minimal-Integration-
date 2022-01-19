@@ -38,11 +38,7 @@ jobs:
         run: |
           echo "::set-output name=is_tag_build::true"
 
-      
-
-      - name: set semver for downstream builds
-        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
-        id: semver
+    
        
       - name: download pre-release wrapper
         if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
