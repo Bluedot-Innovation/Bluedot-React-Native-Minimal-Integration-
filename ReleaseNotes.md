@@ -3,3 +3,4 @@
 ## New changes
 * react-native v 0.64.2
 * CI
+* Re-testing
