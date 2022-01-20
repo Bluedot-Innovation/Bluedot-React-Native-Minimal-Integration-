@@ -11,7 +11,7 @@ PODS:
     - AppCenter/Core
   - AppCenterReactNativeShared (4.2.0):
     - AppCenter/Core (= 4.2.0)
-  - BluedotPointSDK (15.6.0)
+  - BluedotPointSDK (15.5.0)
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
