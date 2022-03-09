@@ -44,16 +44,16 @@ jobs:
         if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
         id: semver
         run: |
-          regex=".*(v(([0-9]+\.[0-9]+\.[0-9]+)-pre\+build.[0-9]+))"
-          if [[ ${{ github.ref }} =~ $regex ]]; then
-            echo "::set-output name=tag::${BASH_REMATCH[1]}"
-            echo "::set-output name=semver::${BASH_REMATCH[2]}"
-            echo "::set-output name=version::${BASH_REMATCH[3]}"
-          elif [[ ${{ github.event.inputs.tag }} =~ $regex ]]; then
-            echo "::set-output name=tag::${BASH_REMATCH[1]}"
-            echo "::set-output name=semver::${BASH_REMATCH[2]}"
-            echo "::set-output name=version::${BASH_REMATCH[3]}"
-          fi
+         // regex=".*(v(([0-9]+\.[0-9]+\.[0-9]+)-pre\+build.[0-9]+))"
+          //if [[ ${{ github.ref }} =~ $regex ]]; then
+            echo "::set-output name=tag::2"
+            echo "::set-output name=semver::1"
+            echo "::set-output name=version::1"
+          //elif [[ ${{ github.event.inputs.tag }} =~ $regex ]]; then
+            //echo "::set-output name=tag::2"
+            //echo "::set-output name=semver::1"
+            //echo "::set-output name=version::1"
+          //fi
       
       - name: download pre-release wrapper
         if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
