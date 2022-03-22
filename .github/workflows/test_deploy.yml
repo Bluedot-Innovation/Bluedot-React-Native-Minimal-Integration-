@@ -281,8 +281,8 @@ jobs:
           
      
        
-   file_contents:
-      runs-on: ubuntu-latest
+ read-file-contents:
+   runs-on: ubuntu-latest
       steps:
        - name: Checkout code
         uses: actions/checkout@v1
