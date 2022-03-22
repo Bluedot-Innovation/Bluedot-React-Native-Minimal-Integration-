@@ -321,7 +321,7 @@ jobs:
           group: Collaborators
           file: Android/${{ env.ANDROID_SIGNED_NAME }}
           notifyTesters: true
-          releaseNotes: ${{ releaseNotes }}
+          releaseNotes: ${releaseNotes}
           debug: true
 
       - name: upload iOS app to App Center
