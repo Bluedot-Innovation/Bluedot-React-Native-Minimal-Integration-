@@ -292,15 +292,30 @@ jobs:
 
       - name: Download artifact
         uses: actions/download-artifact@v2
+        
+        
 
       - name: Read file contents
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'false' }}
         id: read_file
         uses: andstor/file-reader-action@v1
         with:
           path: "ReleaseNotes.md"
 
       - name: File contents
-        run: echo "${{ steps.read_file.outputs.contents }}"
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'false' }}
+        run: echo "${{ steps.read_file.outputs.contents }}"| releaseNotes = ${{ steps.read_file.outputs.contents }}
+        
+      - name: Read plugin contents
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
+        id: read_plugin_RN
+        uses: andstor/file-reader-action@v1
+        with:
+          path: ${{steps.artifact.outputs.file_name}}/ReleaseNotes.md
+          
+      - name: File Plugin contents
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
+        run: echo "${{ steps.read_file.outputs.contents }}"| releaseNotes = ${{ steps.read_plugin_RN.outputs.contents }}
         
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
@@ -310,7 +325,7 @@ jobs:
           group: Collaborators
           file: Android/${{ env.ANDROID_SIGNED_NAME }}
           notifyTesters: true
-          releaseNotes: ${{steps.read_file.outputs.contents}}
+          releaseNotes: ${{releaseNotes}}
           debug: true
 
       - name: upload iOS app to App Center
@@ -321,4 +336,4 @@ jobs:
           group: Collaborators
           file: iOS/RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
-          releaseNotes: ${{steps.read_file.outputs.contents}}
+          releaseNotes: ${{releaseNotes}}
