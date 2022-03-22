@@ -38,5 +38,6 @@ jobs:
           path: "ReleaseNotes.md"
 
       - name: File contents
-        run: echo "${{ steps.read_file.outputs.contents }}"
+        run: echo "${{ steps.read_file.outputs.contents }}"| releaseNotes = ${{ steps.read_file.outputs.contents }} | echo ${releaseNotes}
+       
         
