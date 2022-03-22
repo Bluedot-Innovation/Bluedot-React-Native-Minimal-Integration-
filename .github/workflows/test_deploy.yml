@@ -296,9 +296,13 @@ jobs:
         uses: andstor/file-reader-action@v1
         with:
           path: "ReleaseNotes.md"
+          
+      - name: File contents  
+        run: echo "::set-output ReleaseNotes=::${steps.read_file.outputs.contents}"  
+
 
       - name: File contents
-        run: echo "${ steps.read_file.outputs.contents }"
+        run: echo "${ReleaseNotes}"
 
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
@@ -308,7 +312,7 @@ jobs:
           group: Collaborators
           file: Android/${{ env.ANDROID_SIGNED_NAME }}
           notifyTesters: true
-          releaseNotes: File.read("ReleaseNotes.md")
+          releaseNotes: ${{ ReleaseNotes }}
           debug: true
 
       - name: upload iOS app to App Center
@@ -319,4 +323,4 @@ jobs:
           group: Collaborators
           file: iOS/RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
-          releaseNotes: File.read("ReleaseNotes.md")
+          releaseNotes: ${{ ReleaseNotes }}
