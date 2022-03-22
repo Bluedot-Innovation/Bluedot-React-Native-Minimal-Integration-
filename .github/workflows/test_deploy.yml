@@ -279,15 +279,15 @@ jobs:
           name: iOS
           path: ios/RNPointSDKMinimalIntegration.ipa
           
-  name: "Read file contents"
-  jobs:
-  file_contents:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
+     
+       
+   file_contents:
+      runs-on: ubuntu-latest
+      steps:
+       - name: Checkout code
         uses: actions/checkout@v1
 
-      - name: Read file contents
+       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
         with:
