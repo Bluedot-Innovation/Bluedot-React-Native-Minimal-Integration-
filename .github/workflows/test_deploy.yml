@@ -302,7 +302,7 @@ jobs:
           path: "ReleaseNotes.md"
 
       - name: File contents
-        run: echo "${ steps.read_file.outputs.contents }"
+        run: echo "${{ steps.read_file.outputs.contents }}"
         
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
