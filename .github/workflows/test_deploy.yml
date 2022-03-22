@@ -291,6 +291,15 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
 
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "ReleaseNotes.md"
+
+      - name: File contents
+        run: echo "${ steps.read_file.outputs.contents }"
+
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
