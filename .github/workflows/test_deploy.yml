@@ -279,22 +279,6 @@ jobs:
           name: iOS
           path: ios/RNPointSDKMinimalIntegration.ipa
           
-     
-       
- read-file-contents:
-   runs-on: ubuntu-latest
-      steps:
-       - name: Checkout code
-        uses: actions/checkout@v1
-
-       - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "ReleaseNotes.md"
-
-      - name: File contents
-        run: echo "${ steps.read_file.outputs.contents }"
         
   deploy-to-appcenter:
     runs-on: ubuntu-latest
@@ -308,6 +292,18 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
 
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "ReleaseNotes.md"
+
+      - name: File contents
+        run: echo "${ steps.read_file.outputs.contents }"
+        
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
