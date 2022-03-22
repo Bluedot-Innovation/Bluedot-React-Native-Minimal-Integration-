@@ -284,7 +284,8 @@ jobs:
     runs-on: ubuntu-latest
 
     needs: [prepare-pre-release, build-android-app, build-ios-app]
-
+    env:
+      releaseNotes: ${{ steps.read_file.outputs.contents }}
     steps:
       # Checks-out your repository to get release notes
       - name: Checkout code
@@ -321,7 +322,7 @@ jobs:
           group: Collaborators
           file: Android/${{ env.ANDROID_SIGNED_NAME }}
           notifyTesters: true
-          releaseNotes: ${releaseNotes}
+          releaseNotes: ${env.releaseNotes}
           debug: true
 
       - name: upload iOS app to App Center
@@ -332,4 +333,4 @@ jobs:
           group: Collaborators
           file: iOS/RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
-          releaseNotes: ${releaseNotes}
+          releaseNotes: ${{ env.releaseNotes }}
