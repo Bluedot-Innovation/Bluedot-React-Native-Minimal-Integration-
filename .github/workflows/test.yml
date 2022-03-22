@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Read RN
+
+# Controls when the action will run. 
+on:
+  push:
+    branches:
+      - master
+      - release/*
+      - ni/test2
+    
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Build an app with a specific wrapper version'
+        required: true
+        default: 'Bluedot-React-Native-Plugin release'
+
+# Some global environments to avoid duplicates
+env:
+  ANDROID_SIGNED_NAME: "app-release-signed.apk"
+  ANDROID_RELEASE_DIR: "android/app/build/outputs/apk/release"
+  ANDROID_SIGNED_PATH: "android/app/build/outputs/apk/release/app-release-signed.apk"
+
+jobs:
+  read-to-RN:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository to get release notes
+      - uses: actions/checkout@v2
+
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "ReleaseNotes.md"
+
+      - name: File contents
+        run: echo "${ steps.read_file.outputs.contents }"
+        
