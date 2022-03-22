@@ -300,7 +300,7 @@ jobs:
           path: "ReleaseNotes.md"
 
       - name: File contents
-        run: echo "${{ steps.read_file.outputs.contents }}"| set releaseNotes = "${{ steps.read_file.outputs.contents }}" 
+        run: echo "${{ steps.read_file.outputs.contents }}"| set releaseNotes = "${{ steps.read_file.outputs.contents }}" | echo "${{ needs.prepare-pre-release.outputs.is_tag_build }}"
         
       - name: Read plugin contents
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
@@ -321,7 +321,7 @@ jobs:
           group: Collaborators
           file: Android/${{ env.ANDROID_SIGNED_NAME }}
           notifyTesters: true
-          releaseNotes: releaseNotes
+          releaseNotes: ${{ releaseNotes }}
           debug: true
 
       - name: upload iOS app to App Center
@@ -332,4 +332,4 @@ jobs:
           group: Collaborators
           file: iOS/RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
-          releaseNotes: $releaseNotes
+          releaseNotes: ${releaseNotes}
