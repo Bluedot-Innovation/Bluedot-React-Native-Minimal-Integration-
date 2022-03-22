@@ -278,6 +278,23 @@ jobs:
           # Artifact name
           name: iOS
           path: ios/RNPointSDKMinimalIntegration.ipa
+          
+  name: "Read file contents"
+  jobs:
+  file_contents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "ReleaseNotes.md"
+
+      - name: File contents
+        run: echo "${ steps.read_file.outputs.contents }"
         
   deploy-to-appcenter:
     runs-on: ubuntu-latest
@@ -291,19 +308,6 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
 
-      - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "ReleaseNotes.md"
-          
-      - name: File contents  
-        run: echo "::set-output ReleaseNotes=::${steps.read_file.outputs.contents}"  
-
-
-      - name: File contents
-        run: echo "${ReleaseNotes}"
-
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
@@ -312,7 +316,7 @@ jobs:
           group: Collaborators
           file: Android/${{ env.ANDROID_SIGNED_NAME }}
           notifyTesters: true
-          releaseNotes: ${{ ReleaseNotes }}
+          releaseNotes: ${{steps.read_file.outputs.contents}}
           debug: true
 
       - name: upload iOS app to App Center
@@ -323,4 +327,4 @@ jobs:
           group: Collaborators
           file: iOS/RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
-          releaseNotes: ${{ ReleaseNotes }}
+          releaseNotes: ${{steps.read_file.outputs.contents}}
