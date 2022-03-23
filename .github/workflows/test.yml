@@ -37,7 +37,7 @@ jobs:
 
         # Checks-out your repository to get release notes
         - name: Checkout code
-        - uses: actions/checkout@master
+          uses: actions/checkout@master
 
         - name: Extract files
           if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
