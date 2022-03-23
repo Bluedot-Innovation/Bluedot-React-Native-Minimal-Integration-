@@ -9,7 +9,9 @@ on:
       - master
       - release/*
       - ni/test2
-    
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+-pre\+build\.[0-9]+'
+
   workflow_dispatch:
     inputs:
       tags:
