@@ -308,7 +308,9 @@ jobs:
 
       - name: Set ReleaseNotes Path
         id: set-path
-        run: env.RN_PATH = "./package/ReleaseNotes.md"
+        run: "echo setting RN Path for tag build"
+        env:
+         RN_PATH: "./package/ReleaseNotes.md"
 
 
       - name: Read RN
