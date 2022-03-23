@@ -17,11 +17,6 @@ on:
         required: true
         default: 'Bluedot-React-Native-Plugin release'
 
-# Some global environments to avoid duplicates
-env:
-  ANDROID_SIGNED_NAME: "app-release-signed.apk"
-  ANDROID_RELEASE_DIR: "android/app/build/outputs/apk/release"
-  ANDROID_SIGNED_PATH: "android/app/build/outputs/apk/release/app-release-signed.apk"
 
 jobs:
   read-to-RN:
@@ -34,4 +29,4 @@ jobs:
       - name: Decompress
         uses: TonyBogdanov/zip@1.0
         with:
-          args: unzip -qq ./bluedot-react-native-2.1.2.tgz -d ./target
+          args: unzip -qq bluedot-react-native-2.1.2.tgz -d ./target
