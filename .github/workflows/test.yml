@@ -24,9 +24,12 @@ jobs:
 
     steps:
       # Checks-out your repository to get release notes
-      - uses: actions/checkout@v2
-        
-      - name: Decompress
-        uses: TonyBogdanov/zip@1.0
-        with:
-          args: unzip -qq bluedot-react-native-2.1.2.tgz -d ./target
+        - uses: actions/checkout@master
+
+        - name: Extract files
+          uses: a7ul/tar-action@v1.1.0
+          id: extract
+          with:
+            command: x
+            cwd: ./extract
+            files: bluedot-react-native-2.1.2.tgz
