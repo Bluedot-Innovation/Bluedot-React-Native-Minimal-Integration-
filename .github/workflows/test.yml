@@ -31,5 +31,5 @@ jobs:
           id: extract
           with:
             command: x
-            cwd: ./extract
+            cwd: ./
             files: bluedot-react-native-2.1.2.tgz
