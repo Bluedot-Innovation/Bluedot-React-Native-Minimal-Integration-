@@ -330,7 +330,7 @@ jobs:
           group: Collaborators
           file: Android/${{ env.ANDROID_SIGNED_NAME }}
           notifyTesters: true
-          releaseNotes: ${{ releaseNotes }}
+          releaseNotes: ${{ steps.read_file.outputs.contents }}
           debug: true
 
       - name: upload iOS app to App Center
@@ -341,4 +341,4 @@ jobs:
           group: Collaborators
           file: iOS/RNPointSDKMinimalIntegration.ipa
           notifyTesters: true
-          releaseNotes: ${{ releaseNotes }}
+          releaseNotes: ${{ steps.read_file.outputs.contents }}
