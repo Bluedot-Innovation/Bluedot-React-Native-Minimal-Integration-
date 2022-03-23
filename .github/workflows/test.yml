@@ -15,9 +15,9 @@ on:
   workflow_dispatch:
     inputs:
       tags:
-        description: 'Build an app with a specific wrapper version'
+        description: 'Build test'
         required: true
-        default: 'Bluedot-React-Native-Plugin release'
+        default: 'Test'
 env:
   RN_PATH: "ReleaseNotes.md"
 
