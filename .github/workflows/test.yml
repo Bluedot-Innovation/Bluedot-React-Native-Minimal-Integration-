@@ -33,3 +33,12 @@ jobs:
             command: x
             cwd: ./
             files: bluedot-react-native-2.1.2.tgz
+
+       - name: Read RN
+         id: read_file
+         uses: andstor/file-reader-action@v1
+         with:
+           path: "./package/ReleaseNotes.md"
+
+       - name: File contents
+         run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"| set releaseNotes = "${{ steps.read_file.outputs.contents }}"
