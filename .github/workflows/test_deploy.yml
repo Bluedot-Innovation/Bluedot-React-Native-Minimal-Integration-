@@ -26,6 +26,7 @@ env:
   ANDROID_SIGNED_NAME: "app-release-signed.apk"
   ANDROID_RELEASE_DIR: "android/app/build/outputs/apk/release"
   ANDROID_SIGNED_PATH: "android/app/build/outputs/apk/release/app-release-signed.apk"
+  RN_PATH: "ReleaseNotes.md"
 
 jobs:
   prepare-pre-release:
@@ -296,26 +297,31 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
 
-      - name: Read file contents
+
+      - name: Extract files
+        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
+        uses: a7ul/tar-action@v1.1.0
+        id: extract
+        with:
+          command: x
+          cwd: ./
+          files: ${{ needs.prepare-pre-release.outputs.file_name }}
+
+      - name: Set ReleaseNotes Path
+        id: set-path
+        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
+        run: env.RN_PATH = "./package/ReleaseNotes.md"
+
+
+      - name: Read RN
         id: read_file
         uses: andstor/file-reader-action@v1
         with:
-          path: "ReleaseNotes.md"
+         path: ${{ env.RN_PATH }}
 
       - name: File contents
-        run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"| set releaseNotes = "${{ steps.read_file.outputs.contents }}" | echo "${{ needs.prepare-pre-release.outputs.is_tag_build }}"
-        
-      - name: Read plugin contents
-        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
-        id: read_plugin_RN
-        uses: andstor/file-reader-action@v1
-        with:
-          path: ${{steps.artifact.outputs.file_name}}/ReleaseNotes.md
-          
-      - name: File Plugin contents
-        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
-        run: echo "${{ steps.read_file.outputs.contents }}"| set releaseNotes = "${{ steps.read_plugin_RN.outputs.contents }}" 
-        
+        run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"| echo "${{ needs.prepare-pre-release.outputs.is_tag_build }}"
+
       - name: upload Android app to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
