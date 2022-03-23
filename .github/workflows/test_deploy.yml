@@ -299,7 +299,7 @@ jobs:
 
 
       - name: Extract files
-        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         uses: a7ul/tar-action@v1.1.0
         id: extract
         with:
@@ -309,7 +309,7 @@ jobs:
 
       - name: Set ReleaseNotes Path
         id: set-path
-        if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build == 'true' }}
         run: env.RN_PATH = "./package/ReleaseNotes.md"
 
 
