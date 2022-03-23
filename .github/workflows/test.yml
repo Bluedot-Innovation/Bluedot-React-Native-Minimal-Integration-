@@ -16,7 +16,8 @@ on:
         description: 'Build an app with a specific wrapper version'
         required: true
         default: 'Bluedot-React-Native-Plugin release'
-
+env:
+  PATH: "ReleaseNotes.md"
 
 jobs:
   read-to-RN:
@@ -58,14 +59,14 @@ jobs:
         - name: Set ReleaseNotes Path
           id: set-path
           if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
-          run: path = "./package/ReleaseNotes.md"
+          run: env.PATH = "./package/ReleaseNotes.md"
 
 
         - name: Read RN
           id: read_file
           uses: andstor/file-reader-action@v1
           with:
-           path: path
+           path: ${{ env.PATH }}
 
         - name: File contents
           run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"
