@@ -17,7 +17,7 @@ on:
         required: true
         default: 'Bluedot-React-Native-Plugin release'
 env:
-  PATH: "ReleaseNotes.md"
+  RN_PATH: "ReleaseNotes.md"
 
 jobs:
   read-to-RN:
@@ -59,14 +59,14 @@ jobs:
         - name: Set ReleaseNotes Path
           id: set-path
           if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
-          run: env.PATH = "./package/ReleaseNotes.md"
+          run: env.RN_PATH = "./package/ReleaseNotes.md"
 
 
         - name: Read RN
           id: read_file
           uses: andstor/file-reader-action@v1
           with:
-           path: ${{ env.PATH }}
+           path: ${{ env.RN_PATH }}
 
         - name: File contents
           run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"
