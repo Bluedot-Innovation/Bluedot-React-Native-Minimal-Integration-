@@ -309,15 +309,17 @@ jobs:
       - name: Set ReleaseNotes Path
         id: set-path
         run: "echo setting RN Path for tag build"
-        env:
-         RN_PATH: "./package/ReleaseNotes.md"
-
+        
 
       - name: Read RN
         id: read_file
         uses: andstor/file-reader-action@v1
         with:
          path: ${{ env.RN_PATH }}
+        if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
+        env:
+         RN_PATH: "./package/ReleaseNotes.md"
+
 
       - name: File contents
         run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"| echo "${{ needs.prepare-pre-release.outputs.is_tag_build }}" | echo "${{ needs.prepare-pre-release.outputs.file_name }}"
