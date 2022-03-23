@@ -23,16 +23,16 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       releaseNotes: ${{ steps.read_file.outputs.contents }}
-      is_tag_build: ${{ steps.check-tag.outputs.is_tag_build }}
+      is_tag_build: ${{ steps.check-tag2.outputs.is_tag_build }}
 
     steps:
       # check whenever this is a build for tag whenever it's a downstream build or a manual build
-      - name: Check Tag
-        id: check-tag
-        if: |
+      - name: Check 2 Tag
+        id: check-tag2
+        if:
           contains(github.ref, '-pre+build.') ||
           contains(github.event.inputs.tag, '-pre+build.')
-        run: |
+        run:|
         echo "::set-output name=is_tag_build::true"
 
       # Checks-out your repository to get release notes
