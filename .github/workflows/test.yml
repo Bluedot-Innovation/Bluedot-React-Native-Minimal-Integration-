@@ -20,12 +20,12 @@ on:
 
 jobs:
   read-to-RN:
-    runs-on: ubuntu-latest
-    outputs:
+     runs-on: ubuntu-latest
+     outputs:
       releaseNotes: ${{ steps.read_file.outputs.contents }}
       is_tag_build: ${{ steps.check-tag2.outputs.is_tag_build }}
 
-    steps:
+     steps:
         # check whenever this is a build for tag whenever it's a downstream build or a manual build
         - name: Check 2 Tag
           id: check-tag2
@@ -48,18 +48,18 @@ jobs:
             cwd: ./
             files: bluedot-react-native-2.1.2.tgz
 
-       - name: Set ReleaseNotes Path
-         path = "ReleaseNotes.md"
-         id: set-path
-         if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
-         run: path = "./package/ReleaseNotes.md"
+        - name: Set ReleaseNotes Path
+            path = "ReleaseNotes.md"
+          id: set-path
+          if: ${{ steps.check-tag.outputs.is_tag_build == 'true' }}
+          run: path = "./package/ReleaseNotes.md"
 
 
-      - name: Read RN
-        id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-         path: ${ path }
+        - name: Read RN
+          id: read_file
+          uses: andstor/file-reader-action@v1
+          with:
+           path: ${ path }
 
-       - name: File contents
-         run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"
+        - name: File contents
+          run: echo "::set-output name=releaseNotes::${{ steps.read_file.outputs.contents }}"
