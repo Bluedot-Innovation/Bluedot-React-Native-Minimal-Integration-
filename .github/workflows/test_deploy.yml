@@ -301,17 +301,9 @@ jobs:
         
       - name: List names of Prerelease artifact
         run: |
-            echo "${{ needs.prepare-pre-release.outputs.file_name }}" | echo "$(ls -al ./pre_release_wrapper/)"
+            echo "${{ needs.prepare-pre-release.outputs.file_name }}" | echo "$(ls -al ./pre_release_wrapper/)" |echo "$(tar -xvzf ./pre_release_wrapper/bluedot-react-native-2.1.2.tgz)"
          
-      - name: Extract files
-        if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
-        uses: a7ul/tar-action@v1.1.0
-        id: extract
-        with:
-          command: x
-          cwd: ./pre_release_wrapper
-          files: bluedot-react-native-2.1.2.tgz
-
+     
       - name: Set RN Path
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
         run: |
