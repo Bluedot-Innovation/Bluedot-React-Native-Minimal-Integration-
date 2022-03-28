@@ -298,6 +298,10 @@ jobs:
 
       - name: Download artifact
         uses: actions/download-artifact@v2
+        
+      - name: List names of Prerelease artifact
+        run: |
+            echo "ls -al /home/runner/work/Bluedot-React-Native-Minimal-Integration/Bluedot-React-Native-Minimal-Integration/pre_release_wrapper"
          
       - name: Extract files
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
