@@ -301,7 +301,7 @@ jobs:
         
       - name: List names of Prerelease artifact
         run: |
-            echo "${{ needs.prepare-pre-release.outputs.file_name }}" | echo "$(ls -al ./pre_release_wrapper/)" |echo "$(tar -xvzf ./pre_release_wrapper/bluedot-react-native-2.1.2.tgz)"
+            echo "${{ needs.prepare-pre-release.outputs.file_name }}" | echo "$(ls -al ./pre_release_wrapper/)" |echo "$(tar -xvzf ./pre_release_wrapper/${{ needs.prepare-pre-release.outputs.file_name }})"
          
      
       - name: Set RN Path
