@@ -305,7 +305,7 @@ jobs:
         id: extract
         with:
           command: x
-          cwd: ./
+          cwd: ./pre_release_wrapper/
           files: ${{ needs.prepare-pre-release.outputs.file_name }}
 
       - name: Set RN Path
