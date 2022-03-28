@@ -301,7 +301,7 @@ jobs:
         
       - name: List names of Prerelease artifact
         run: |
-            echo "${{ steps.artifact.outputs.file_name }}"
+            echo "${{ needs.prepare-pre-release.outputs.file_name }}" | echo "$(ls -al ./pre_release_wrapper/)"
          
       - name: Extract files
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
@@ -310,7 +310,7 @@ jobs:
         with:
           command: x
           cwd: ./pre_release_wrapper/
-          files: ${{ steps.artifact.outputs.file_name }}
+          files: ${{ needs.prepare-pre-release.outputs.file_name }}
 
       - name: Set RN Path
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
