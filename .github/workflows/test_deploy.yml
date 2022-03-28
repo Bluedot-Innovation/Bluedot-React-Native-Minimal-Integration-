@@ -306,8 +306,8 @@ jobs:
      
       - name: Set RN Path
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
-        run: |
-         ${{env.RN_PATH}} = "./package/ReleaseNotes.md"   
+        env:
+          RN_PATH: "./package/ReleaseNotes.md"   
           
       - name: Read RN
         id: read_file
