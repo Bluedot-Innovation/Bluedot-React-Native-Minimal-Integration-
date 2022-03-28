@@ -310,7 +310,7 @@ jobs:
         with:
           command: x
           cwd: ./pre_release_wrapper
-          files: ${{needs.prepare-pre-release.outputs.file_name}}
+          files: bluedot-react-native-2.1.2.tgz
 
       - name: Set RN Path
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
