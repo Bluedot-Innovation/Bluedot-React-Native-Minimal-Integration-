@@ -305,7 +305,7 @@ jobs:
         id: extract
         with:
           command: x
-          cwd: ./
+          cwd: ./pre_release_wrapper/
           files: pre_release_wrapper
 
       - name: Set RN Path
