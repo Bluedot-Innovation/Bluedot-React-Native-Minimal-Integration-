@@ -306,6 +306,8 @@ jobs:
      
       - name: Set RN Path
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
+        run: |
+          echo "Release Notes"
         env:
           RN_PATH: "./package/ReleaseNotes.md"   
           
