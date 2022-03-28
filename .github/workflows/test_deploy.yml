@@ -301,7 +301,7 @@ jobs:
         
       - name: List names of Prerelease artifact
         run: |
-            echo "ls -al /home/runner/work/Bluedot-React-Native-Minimal-Integration/Bluedot-React-Native-Minimal-Integration/pre_release_wrapper"
+            echo "${{ steps.artifact.outputs.file_name }}"
          
       - name: Extract files
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
@@ -310,7 +310,7 @@ jobs:
         with:
           command: x
           cwd: ./pre_release_wrapper/
-          files: ${{ needs.prepare-pre-release.outputs.file_name }}
+          files: ${{ steps.artifact.outputs.file_name }}
 
       - name: Set RN Path
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
