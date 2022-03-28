@@ -309,8 +309,8 @@ jobs:
         id: extract
         with:
           command: x
-          cwd: ./pre_release_wrapper/
-          files: ${{ needs.prepare-pre-release.outputs.file_name }}
+          cwd: ./pre_release_wrapper
+          files: ${{needs.prepare-pre-release.outputs.file_name}}
 
       - name: Set RN Path
         if: ${{ needs.prepare-pre-release.outputs.is_tag_build }}
