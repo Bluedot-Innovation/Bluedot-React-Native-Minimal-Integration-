@@ -25,7 +25,7 @@ export default function Main() {
     });
 
     BluedotPointSdk.unsubscribe("zoneInfoUpdate", () => {
-      console.log()
+      console.log(JSON.stringify(BluedotPointSdk.getZonesAndFences()))
     });
 
     BluedotPointSdk.unsubscribe(

@@ -36,16 +36,20 @@ export default function Initialize() {
   const registerBluedotListeners = () => {
     BluedotPointSdk.on("enterZone", (event) => {
       const message = `You have checked in ${event.zoneInfo.name}`;
+      console.log(message);
       sendLocalNotification(message);
     });
 
     BluedotPointSdk.on("exitZone", (event) => {
       const message = `You have checked-out from ${event.zoneInfo.name}`;
+      console.log(message);
       sendLocalNotification(message);
     });
 
     BluedotPointSdk.on("zoneInfoUpdate", () => {
-      BluedotPointSdk.getZonesAndFences()
+      const message = `Did Update ZoneInfo ${JSON.stringify(BluedotPointSdk.getZonesAndFences())}`;
+      console.log(message);
+      console.log(JSON.stringify(BluedotPointSdk.getZonesAndFences()))
     });
 
     BluedotPointSdk.on(
