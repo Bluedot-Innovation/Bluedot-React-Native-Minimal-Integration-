@@ -1,4 +1,5 @@
 import React from 'react';
+import MapView from 'react-native-maps';
 import { NativeRouter, Route, Routes } from "react-router-native";
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -9,6 +10,7 @@ import Initilize from "./components/InitializeSdk";
 import Main from "./components/Main";
 import GeoTriggering from "./components/GeoTriggering";
 import Tempo from "./components/Tempo";
+
 
 
 export default function App() {
