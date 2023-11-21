@@ -1,4 +1,5 @@
 import React from 'react';
+import MapView from 'react-native-maps';
 import { NativeRouter, Route, Routes } from "react-router-native";
 import { StatusBar } from 'expo-status-bar';
 import {
