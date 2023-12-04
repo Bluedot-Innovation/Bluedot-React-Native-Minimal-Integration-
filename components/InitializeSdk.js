@@ -43,7 +43,10 @@ export default function Initialize() {
       if (Platform.OS === OS.IOS) {
           customData = event.customData;
       }
-      const message = `You have checked in ${event.zoneInfo.name} and customData is ${JSON.stringify(customData)}`;
+      
+      fetch('https://webhook.site/23eca220-f5cd-4688-9595-44c230715953', {});
+
+    const message = `You have checked in ${event.zoneInfo.name} and customData is ${JSON.stringify(customData)}`;
       sendLocalNotification(message);
     });
 
