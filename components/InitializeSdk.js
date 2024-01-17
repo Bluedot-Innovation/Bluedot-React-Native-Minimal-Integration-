@@ -19,18 +19,17 @@ export default function Initialize() {
   useEffect(() => {
     BluedotPointSdk.isInitialized().then((isInitialized) => {
          if (isInitialized) {
-                    setIsSdkInitialized(true)
-                    BluedotPointSdk.isGeoTriggeringRunning()
-                          .then((isRunning: boolean) => {
-                                   console.log("Constructor GeoTrigger Status", isRunning);
-                                          if (isRunning) {
-                                          BluedotPointSdk.unsubscribeAll();
-                                          registerBluedotListeners()
-                                      }
-                                   }
-                           );
-                  }
-                });
+               setIsSdkInitialized(true)
+               BluedotPointSdk.isGeoTriggeringRunning()
+                  .then((isRunning: boolean) => {
+                         console.log("Constructor GeoTrigger Status", isRunning);
+                         if (isRunning) {
+                              BluedotPointSdk.unsubscribeAll();
+                              registerBluedotListeners()
+                        }
+                  });
+          }
+    });
 
 
     console.log("App Initialize check useEffect");
