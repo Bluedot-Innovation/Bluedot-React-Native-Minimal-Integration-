@@ -18,9 +18,21 @@ export default function Initialize() {
 
   useEffect(() => {
     BluedotPointSdk.isInitialized().then((isInitialized) => {
-      if (isInitialized) setIsSdkInitialized(true)
+         if (isInitialized) {
+               setIsSdkInitialized(true)
+               BluedotPointSdk.isGeoTriggeringRunning()
+                  .then((isRunning: boolean) => {
+                         console.log("Constructor GeoTrigger Status", isRunning);
+                         if (isRunning) {
+                              BluedotPointSdk.unsubscribeAll();
+                              registerBluedotListeners()
+                        }
+                  });
+          }
     });
 
+
+    console.log("App Initialize check useEffect");
     // Set custom event metadata.
     // We suggest to set the Custom Event Meta Data before starting GeoTriggering or Tempo.
     BluedotPointSdk.setCustomEventMetaData({
@@ -36,6 +48,7 @@ export default function Initialize() {
   }, [isSdkInitialized])
 
   const registerBluedotListeners = () => {
+  console.log("registerBluedotListeners Enter");
     BluedotPointSdk.on("enterZone", (event) => {
       console.log("Enter Zone callback received");
       console.log(JSON.stringify(event));
