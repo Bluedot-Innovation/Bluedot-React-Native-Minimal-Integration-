@@ -99,7 +99,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "2.3.8"
+        versionName "3.0.0"
     }
 
     splits {
@@ -162,7 +162,6 @@ dependencies {
     implementation project(':appcenter')
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
-    implementation "com.facebook.fbjni:fbjni:0.5.1"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
