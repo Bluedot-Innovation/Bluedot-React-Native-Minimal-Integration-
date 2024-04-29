@@ -506,6 +506,7 @@
 				DEVELOPMENT_TEAM = 9H7C75E224;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RNPointSDKMinimalIntegration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -534,6 +535,7 @@
 				CURRENT_PROJECT_VERSION = 62;
 				DEVELOPMENT_TEAM = 9H7C75E224;
 				INFOPLIST_FILE = RNPointSDKMinimalIntegration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
