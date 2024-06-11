@@ -19,7 +19,7 @@
     "@react-native/metro-config": "^0.73.0",
     "appcenter": "^5.0.1",
     "appcenter-crashes": "^5.0.1",
-    "bluedot-react-native": "github:Bluedot-Innovation/Bluedot-React-Native-Plugin#dev/3.0.0-sdk16",
+    "bluedot-react-native": "^3.0.0",
     "expo": "^50.0.15",
     "expo-application": "^5.8.3",
     "expo-constants": "~15.4.5",
