@@ -16,7 +16,15 @@ export default function Initialize() {
 
   useEffect(() => {
     BluedotPointSdk.isInitialized().then((isInitialized) => {
-      if (isInitialized) setIsSdkInitialized(true)
+         if (isInitialized) {
+               setIsSdkInitialized(true)
+               BluedotPointSdk.isGeoTriggeringRunning()
+                  .then((isRunning: boolean) => {
+                         console.log("ABCD Constructor GeoTrigger Status", isRunning);
+                         BluedotPointSdk.unsubscribeAll();
+                         registerBluedotListeners();
+                  });
+          }
     });
 
     // Set custom event metadata.
@@ -31,7 +39,7 @@ export default function Initialize() {
 
   useEffect(() => {
     if (isSdkInitialized) navigate("/main");
-  }, [isSdkInitialized])
+  }, [isSdkInitialized]);
 
   const registerBluedotListeners = () => {
     BluedotPointSdk.on("enterZone", (event) => {
