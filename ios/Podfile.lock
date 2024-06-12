@@ -11,7 +11,7 @@ PODS:
     - AppCenter/Core
   - AppCenterReactNativeShared (4.4.5):
     - AppCenter/Core (= 4.4.3)
-  - BluedotPointSDK (15.6.9)
+  - BluedotPointSDK (16.0.0)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -416,8 +416,8 @@ PODS:
     - React-Core
   - react-native-maps (1.8.0):
     - React-Core
-  - react-native-plugin (2.3.8):
-    - BluedotPointSDK (= 15.6.9)
+  - react-native-plugin (3.0.0):
+    - BluedotPointSDK (= 16.0.0)
     - React
   - React-NativeModulesApple (0.72.7):
     - hermes-engine
@@ -537,35 +537,10 @@ PODS:
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNReanimated (3.3.0):
-    - DoubleConversion
-    - FBLazyVector
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React-callinvoker
+  - RNReanimated (3.9.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - React-Core/DevSupport
-    - React-Core/RCTWebSocket
-    - React-CoreModules
-    - React-cxxreact
-    - React-hermes
-    - React-jsi
-    - React-jsiexecutor
-    - React-jsinspector
-    - React-RCTActionSheet
-    - React-RCTAnimation
-    - React-RCTAppDelegate
-    - React-RCTBlob
-    - React-RCTImage
-    - React-RCTLinking
-    - React-RCTNetwork
-    - React-RCTSettings
-    - React-RCTText
     - ReactCommon/turbomodule/core
-    - Yoga
   - RNScreens (3.22.1):
     - React-Core
     - React-RCTImage
@@ -805,7 +780,7 @@ SPEC CHECKSUMS:
   appcenter-core: c593b2e4ac28d6a21b6a217c4a5e6b3de7b0b00f
   appcenter-crashes: d9ae1c9296974c1c433600fa2f320e0ba1f12bdf
   AppCenterReactNativeShared: f395caeabde0dc3a11609dbcb737d0f14cd40e79
-  BluedotPointSDK: 96dc65771f4e85a6adace3399eb685dc12eec2a3
+  BluedotPointSDK: 2f28e12f05b24fdcd4bca5707c799d1d906b41af
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -850,7 +825,7 @@ SPEC CHECKSUMS:
   React-logger: 8edc785c47c8686c7962199a307015e2ce9a0e4f
   react-native-geolocation: 69f4fd37650b8e7fee91816d395e62dd16f5ab8d
   react-native-maps: f699e0753c22c4d5c3a44d03895b193a4dbca6c2
-  react-native-plugin: db91f109e2c5b620a73d8dce1b43506350be4525
+  react-native-plugin: 217064d3d692c29c8a693bd5d2343c3baa095b42
   React-NativeModulesApple: b6868ee904013a7923128892ee4a032498a1024a
   React-perflogger: 31ea61077185eb1428baf60c0db6e2886f141a5a
   React-RCTActionSheet: 392090a3abc8992eb269ef0eaa561750588fc39d
@@ -872,12 +847,12 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNReanimated: 9f7068e43b9358a46a688d94a5a3adb258139457
+  RNReanimated: f31d0a208de309869a9786c7bc44faf5375ea29b
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 1059ecd39580995c20ceccb21ff800d6592a8277
+PODFILE CHECKSUM: 0562940e3e821bd430db577b3c44a30e69f05454
 
 COCOAPODS: 1.15.2

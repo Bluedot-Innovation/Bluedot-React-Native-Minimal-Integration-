@@ -2,8 +2,9 @@ require File.join(File.dirname(`node --print "require.resolve('expo/package.json
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '13.0'
+platform :ios, '14.0'
 prepare_react_native_project!
+use_modular_headers!
 
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
 # because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
@@ -67,14 +68,6 @@ target 'RNPointSDKMinimalIntegration' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
-
-    # Workaround for issue `building for iOS Simulator-x86_64 but attempting to link with file built for iOS Simulator-arm64`
-    # when running on Apple M1 Simulators
-    # Reference: https://stackoverflow.com/a/63955114
-    installer.pods_project.build_configurations.each do |config|
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-    end
 
     # This is necessary for Xcode 14, because it signs resource bundles by default
     # when building for devices.
