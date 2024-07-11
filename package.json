@@ -36,7 +36,7 @@
     "react-native-gradle-plugin": "^0.72.1",
     "react-native-permissions": "~3.9.0",
     "react-native-push-notification": "~8.1.1",
-    "react-native-reanimated": "~3.6.2",
+    "react-native-reanimated": "~3.9.0",
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
     "react-router-dom": "~6.3.0",
