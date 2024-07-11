@@ -20,7 +20,7 @@
     "appcenter": "^5.0.1",
     "appcenter-crashes": "^5.0.1",
     "bluedot-react-native": "Bluedot-Innovation/Bluedot-React-Native-Plugin#nk/BD-5597-upgrade-rn-to-0.74.2",
-    "expo": "^50.0.15",
+    "expo": "^51.0.18",
     "expo-application": "^5.8.3",
     "expo-constants": "~15.4.5",
     "expo-file-system": "^16.0.0",
