@@ -18,21 +18,9 @@ export default function Initialize() {
 
   useEffect(() => {
     BluedotPointSdk.isInitialized().then((isInitialized) => {
-         if (isInitialized) {
-               setIsSdkInitialized(true)
-               BluedotPointSdk.isGeoTriggeringRunning()
-                  .then((isRunning: boolean) => {
-                         console.log("Constructor GeoTrigger Status", isRunning);
-                         if (isRunning) {
-                              BluedotPointSdk.unsubscribeAll();
-                              registerBluedotListeners()
-                        }
-                  });
-          }
+      if (isInitialized) setIsSdkInitialized(true)
     });
 
-
-    console.log("App Initialize check useEffect");
     // Set custom event metadata.
     // We suggest to set the Custom Event Meta Data before starting GeoTriggering or Tempo.
     BluedotPointSdk.setCustomEventMetaData({
@@ -48,25 +36,34 @@ export default function Initialize() {
   }, [isSdkInitialized])
 
   const registerBluedotListeners = () => {
-  console.log("registerBluedotListeners Enter");
     BluedotPointSdk.on("enterZone", (event) => {
-      console.log("Enter Zone callback received");
-      console.log(JSON.stringify(event));
-      var customData = event.zoneInfo.customData;
-      if (Platform.OS === OS.IOS) {
-          customData = event.customData;
-      }
-      const message = `You have checked in ${event.zoneInfo.name} and customData is ${JSON.stringify(customData)}`;
+      const message = `You have checked in ${event.zoneInfo.name}`;
       sendLocalNotification(message);
+      console.log(`entered: ${JSON.stringify(event)}`);
+
+      // Test querying CustomEventMetaData
+      BluedotPointSdk.getCustomEventMetaData().then((metadata) => {
+        const message = `on Entered, CustomEventMetaData: ${JSON.stringify(metadata)}`;
+        console.log(message);
+        console.log(JSON.stringify(metadata))
+      });
     });
 
     BluedotPointSdk.on("exitZone", (event) => {
       const message = `You have checked-out from ${event.zoneInfo.name}`;
-      sendLocalNotification(message);
+      sendLocalNotification(message);\
+      console.log(`exited: ${JSON.stringify(event)}`);
     });
 
     BluedotPointSdk.on("zoneInfoUpdate", () => {
-      BluedotPointSdk.getZonesAndFences()
+      // zoneInfoUpdate callback no longer returns zoneInfos, query it directly from the SDK
+      BluedotPointSdk.getZonesAndFences().then((zoneInfos) => {
+        if (zoneInfos != null) {
+          const message = `Did Update ZoneInfo ${JSON.stringify(zoneInfos)}`;
+          console.log(message);
+          console.log(JSON.stringify(zoneInfos))
+        }
+      });
     });
 
     BluedotPointSdk.on(
