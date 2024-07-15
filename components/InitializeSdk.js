@@ -51,7 +51,7 @@ export default function Initialize() {
 
     BluedotPointSdk.on("exitZone", (event) => {
       const message = `You have checked-out from ${event.zoneInfo.name}`;
-      sendLocalNotification(message);\
+      sendLocalNotification(message);
       console.log(`exited: ${JSON.stringify(event)}`);
     });
 
