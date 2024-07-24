@@ -13,7 +13,6 @@ export default function GeoTriggering() {
   const [error, setError] = useState(null);
   const [isBackgroundLocationUpdatesEnabled, setIsBackgroundLocationUpdatesEnabled] = useState(false);
   const allowsBackgroundLocationUpdatesString = "allowsBackgroundLocationUpdates";
-  const geoTriggerRunning = "geoTriggerRunning";
   const toggleSwitch = async (value) => {
     setIsBackgroundLocationUpdatesEnabled(value);
     BluedotPointSdk.backgroundLocationAccessForWhileUsing(value);
@@ -27,25 +26,11 @@ export default function GeoTriggering() {
   const geoTriggeringBuilder = new BluedotPointSdk.GeoTriggeringBuilder();
   let isBackgroundLocationUpdatesEnabledString = `Is Background Location Enabled: ${isBackgroundLocationUpdatesEnabled}`;
 
-  useEffect(() => {
-
-   const retrieveGeoTriggerStatus = async () => {
-      try {
-            const geoTriggeringRunning = ((await AsyncStorage.getItem(geoTriggerRunning) || 'false') === 'true')
-            console.log('ABCD from geoTriggeringRunning from DB', geoTriggeringRunning);
-            setIsGeotriggeringRunning(geoTriggeringRunning);
-      } catch(e) {
-            console.log(e);
-      }
-   };
-
-  BluedotPointSdk.isGeoTriggeringRunning().then((isRunning) => {
+   useEffect(() => {
+       BluedotPointSdk.isGeoTriggeringRunning().then((isRunning) => {
          setIsGeotriggeringRunning(isRunning);
-        //Check DB only if Geo-trigger returned false can be possible in case of NO-FG Geo-trigger App kill reopen
-         if (Platform.OS === OS.ANDROID && isRunning === false) {
-          retrieveGeoTriggerStatus();
-         }
-   });
+         console.log("ABCD from GeoTrigger ",isRunning);
+       });
 
     const retrieveBackgroundLocationStatus = async () => {
       try {
@@ -67,21 +52,10 @@ export default function GeoTriggering() {
 
   const handleStartGeotriggering = () => {
     const onSuccessCallback = () => setIsGeotriggeringRunning(true)
-    const onSuccessAndroidCallback = async () => {
-
-    setIsGeotriggeringRunning(true)
-      try {
-            await AsyncStorage.setItem(geoTriggerRunning, 'true');
-            } catch (e) {
-              console.log(e);
-            }
-            console.log('ABCD set geoTriggeringRunning', true);
-
-    }
     const onFailCallback = (error) => setError(error);
 
     if(Platform.OS === OS.ANDROID) {
-       geoTriggeringBuilder.start(onSuccessAndroidCallback, onFailCallback);
+       geoTriggeringBuilder.start(onSuccessCallback, onFailCallback);
     } else {
        geoTriggeringBuilder
          .iOSAppRestartNotification("Press here to restart the app", "Press here to restart the app")
@@ -114,13 +88,8 @@ export default function GeoTriggering() {
   };
 
   const handleStopGeotriggering = () => {
-    const onSuccessCallback = async () => {
+    function onSuccessCallback() {
       setIsGeotriggeringRunning(false);
-       try {
-              await AsyncStorage.setItem(geoTriggerRunning, 'false');
-        } catch (e) {
-            console.log(e);
-       }
     }
     function onFailCallback(error) {
       setError(error);
